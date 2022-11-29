@@ -19,6 +19,20 @@ module.exports = {
                 return res.status(500).json(err);
             });
     },
+    deleteThought(req, res) {
+        Thought.findOneAndRemove({ _id: req.params.thoughtId })
+          .then((thought) =>
+            !thought
+              ? res.json({
+                  message: 'No thought with this id',
+                })
+              : res.json({ message: 'Thought successfully deleted' })
+          )
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      },
     createThought(req, res) {
         Thought.create(req.body)
             .then((thought) => {
@@ -38,7 +52,7 @@ module.exports = {
     updateThought(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $set: req.body },
+            { $set: {thoughtText: req.body.thoughtText }},
             { runValidators: true, new: true }
         )
             .then((thought) =>
