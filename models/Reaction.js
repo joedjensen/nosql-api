@@ -25,12 +25,12 @@ const reactionSchema = new Schema(
         toJSON: {
           getters: true,
         },
-        id: false,
+        _id: false,
       }
 )
 
 function formatDate(date) {
-    return date;
+    return date.toLocaleString();
 }
 
 

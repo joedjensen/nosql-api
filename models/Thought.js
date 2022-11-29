@@ -31,7 +31,7 @@ const thoughtSchema = new Schema(
 )
 
 function formatDate(date) {
-    return date;
+    return date.toLocaleString();
 }
 
 thoughtSchema.virtual('reactionCount').get(function () {
