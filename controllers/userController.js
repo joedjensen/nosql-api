@@ -66,14 +66,17 @@ module.exports = {
                   { friends: req.params.userId },
                   { $pull: { friends: req.params.userId } },
                   { new: true }
-                )
-          )
-          .then((friends) =>
-            !friends
-              ? res.json({
-                  message: 'User deleted, no friends found',
-                })
-              : res.json({ message: 'User deleted, removed from friends lists' })
+                ).then((friends) =>
+                !friends
+                  ? res.json({
+                      message: 'User deleted, no friends found',
+                    })
+                  : res.json({ message: 'User deleted, removed from friends lists' })
+              )
+              .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+              })
           )
           .catch((err) => {
             console.log(err);
